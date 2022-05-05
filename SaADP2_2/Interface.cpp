@@ -13,7 +13,8 @@ void printMenu()
 		<< "\n2. Selection sort."
 		<< "\n3. Insertion sort."
 		<< "\n4. Shell sort."
-		<< "\n5. Exit."
+		<< "\n5. Quick sort."
+		<< "\n6. Exit."
 		<< endl;
 }
 
@@ -38,12 +39,13 @@ void interface(int* mainArray, int* auxArray, int& countCompares, int& countExch
 		cout << "   Choice: ";
 		switch (input())
 		{
-		case ShowMenu: { printMenu(); break; }
-		case BubbleSort: { caseSort(bubbleSort, mainArray, auxArray, countCompares, countExchanges, size); break; }
+		case ShowMenu:		{ printMenu(); break; }
+		case BubbleSort:    { caseSort(bubbleSort, mainArray, auxArray, countCompares, countExchanges, size); break; }
 		case SelectionSort: { caseSort(selectionSort, mainArray, auxArray, countCompares, countExchanges, size); break; }
 		case InsertionSort: { caseSort(insertionSort, mainArray, auxArray, countCompares, countExchanges, size); break; }
-		case ShellSort: { caseSort(shellSort, mainArray, auxArray, countCompares, countExchanges, size); break; }
-		case Exit: { stop = true; break; }
+		case ShellSort:     { caseSort(shellSort, mainArray, auxArray, countCompares, countExchanges, size); break; }
+		case QuickSort:     { caseSort(quickSort, mainArray, auxArray, countCompares, countExchanges, size); break; }
+		case Exit:          { stop = true; break; }
 		default:              cout << "   There is no such menu item.\n\n"; break;
 		}
 		cout << "   (0) - show menu.\n";
@@ -59,7 +61,7 @@ int getSize()
 
 void showInfo(int* mainArray, int* auxArray, int& countCompares, int& countExchanges, int size)
 {
-	cout << "\n   Before sotrting:\n   ";
+	cout << "\n   Before sorting:\n   ";
 	show(mainArray, size);
 	cout << "\n\n   After sorting:\n   ";
 	show(auxArray, size);

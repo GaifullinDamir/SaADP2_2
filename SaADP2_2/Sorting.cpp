@@ -95,6 +95,30 @@ void shellSort(int* auxArray, int& countCompares, int& countExchanges, int size)
 	}
 	clearMemory(stepsArray);
 }
+
+void quickSort(int* auxArray, int& countCompares, int& countExchanges, int size)
+{
+	int left = 0; int right = size - 1;
+	int middle = auxArray[size / 2];
+	int temporary;
+	do {
+		while (auxArray[left] < middle) { countCompares++; left++; }
+		while (auxArray[right] > middle) { countCompares++; right--; }
+		countCompares += 2;
+		if(left <= right) 
+		{
+			temporary = auxArray[left];
+			auxArray[left] = auxArray[right];
+			auxArray[right] = temporary;
+			left++; right--; 
+			countExchanges++;
+		}
+	} while (left <= right);
+
+	if (right > 0) { quickSort(auxArray, countCompares, countExchanges, right + 1); }
+	if (left < size) { quickSort(auxArray, countCompares, countExchanges, size - left); }
+
+}
 void show(int* currentArray, int size)
 {
 	for (int cell = 0; cell < size; cell++)

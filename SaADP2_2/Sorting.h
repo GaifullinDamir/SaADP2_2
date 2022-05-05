@@ -18,6 +18,8 @@ void insertionSort(int* auxArray, int& countCompares, int& countExchanges, int s
 
 void shellSort(int* auxArray, int& countCompares, int& countExchanges, int size);
 
+void quickSort(int* auxArray, int& countCompares, int& countExchanges, int size);
+
 void show(int* currentArray, int size);
 
 void clearMemory(int* currentArray);
