@@ -12,7 +12,8 @@ void printMenu()
 		<< "\n1. Bubble sort."
 		<< "\n2. Selection sort."
 		<< "\n3. Insertion sort."
-		<< "\n4. Exit."
+		<< "\n4. Shell sort."
+		<< "\n5. Exit."
 		<< endl;
 }
 
@@ -41,6 +42,7 @@ void interface(int* mainArray, int* auxArray, int& countCompares, int& countExch
 		case BubbleSort: { caseSort(bubbleSort, mainArray, auxArray, countCompares, countExchanges, size); break; }
 		case SelectionSort: { caseSort(selectionSort, mainArray, auxArray, countCompares, countExchanges, size); break; }
 		case InsertionSort: { caseSort(insertionSort, mainArray, auxArray, countCompares, countExchanges, size); break; }
+		case ShellSort: { caseSort(shellSort, mainArray, auxArray, countCompares, countExchanges, size); break; }
 		case Exit: { stop = true; break; }
 		default:              cout << "   There is no such menu item.\n\n"; break;
 		}
@@ -66,6 +68,7 @@ void showInfo(int* mainArray, int* auxArray, int& countCompares, int& countExcha
 
 void caseSort(void(*pSort)(int*, int&, int&, int), int* mainArray, int* auxArray, int& countCompares, int& countExchanges, int size)
 {
+	countCompares = countExchanges = 0;
 	duplicateArray(mainArray, auxArray, size);
 	pSort(auxArray, countCompares, countExchanges, size);
 	showInfo(mainArray, auxArray, countCompares, countExchanges, size);

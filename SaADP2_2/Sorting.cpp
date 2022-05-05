@@ -70,6 +70,31 @@ void insertionSort(int* auxArray, int& countCompares, int& countExchanges, int s
 		countCompares++;
 	}
 }
+
+void shellSort(int* auxArray, int& countCompares, int& countExchanges, int size)
+{
+	int steps = (int)log2(size) - 1; int copySteps = steps;
+	int* stepsArray = new int[steps];
+	for (int i = 0; copySteps > 0; i++, copySteps--){ stepsArray[i] = 2 * copySteps - 1; }
+	int temporary, stepLength, j;
+	for (int m = 0; m < steps; m++)
+	{
+		stepLength = stepsArray[m];
+		for (int i = stepLength; i < size; i++)
+		{
+			temporary = auxArray[i]; j = i - stepLength;
+			while (j >= 0 && temporary < auxArray[j])
+			{
+				countCompares++;
+				auxArray[j + stepLength] = auxArray[j]; j = j - stepLength;
+				countExchanges++;
+			}
+			countCompares++;
+			auxArray[j + stepLength] = temporary;
+		}
+	}
+	clearMemory(stepsArray);
+}
 void show(int* currentArray, int size)
 {
 	for (int cell = 0; cell < size; cell++)

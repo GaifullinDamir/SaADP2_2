@@ -3,7 +3,7 @@
 
 enum interface
 {
-	ShowMenu, BubbleSort, SelectionSort, InsertionSort, Exit,
+	ShowMenu, BubbleSort, SelectionSort, InsertionSort, ShellSort, Exit,
 	BaseLevel = 1,
 };
 
