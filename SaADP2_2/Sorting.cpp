@@ -96,28 +96,72 @@ void shellSort(int* auxArray, int& countCompares, int& countExchanges, int size)
 	clearMemory(stepsArray);
 }
 
-void quickSort(int* auxArray, int& countCompares, int& countExchanges, int size)
+void quickSort(int* auxArray, int begin, int end, int& countCompares, int& countExchanges, int size)
 {
-	int left = 0; int right = size - 1;
-	int middle = auxArray[size / 2];
-	int temporary;
-	do {
-		while (auxArray[left] < middle) { countCompares++; left++; }
-		while (auxArray[right] > middle) { countCompares++; right--; }
-		countCompares += 2;
-		if(left <= right) 
+	int temporary, middle, i = begin, j = end;
+	middle = auxArray[(begin + end) / 2];
+	do
+	{
+		while (auxArray[i] < middle)
 		{
-			temporary = auxArray[left];
-			auxArray[left] = auxArray[right];
-			auxArray[right] = temporary;
-			left++; right--; 
+			i++;
+			countCompares++;
+		}
+		while (auxArray[j] > middle)
+		{
+			j--;
+			countCompares++;
+		}
+		countCompares += 2;
+		if (i <= j)
+		{
+			temporary = auxArray[i]; auxArray[i] = auxArray[j]; auxArray[j] = temporary;
+			i++; j--;
 			countExchanges++;
 		}
-	} while (left <= right);
+	} while (i <= j);
 
-	if (right > 0) { quickSort(auxArray, countCompares, countExchanges, right + 1); }
-	if (left < size) { quickSort(auxArray, countCompares, countExchanges, size - left); }
+	if (begin < j) { quickSort(auxArray, begin, j, countCompares, countExchanges, size); }
+	if (i < end) {  quickSort(auxArray, i, end, countCompares, countExchanges, size); }
+}
 
+void sieve(int* auxArray, int left, int right, int& countCompares, int& countExchanges)
+{
+	int i = left, j = 2 * left, x = auxArray[left];
+	if (j < right && auxArray[j + 1] > auxArray[j])
+	{
+		j++;
+	}
+	countCompares++;
+	while (j <= right && auxArray[j] > x)
+	{
+		countCompares++;
+		auxArray[i] = auxArray[j]; i = j; j = 2 * j;
+		countExchanges++;
+		if (j < right && auxArray[j + 1] > auxArray[j])
+		{
+			j++;
+		}
+		countCompares++;
+	}
+	countCompares++;
+	auxArray[i] = x;
+	countExchanges++;
+}
+void pyramidSort(int* auxArray, int& countCompares, int& countExchanges, int size)
+{
+	int temporary;
+	int left = (size / 2) + 2; int right = size - 1;
+	while (left > 0)
+	{
+		left--; sieve(auxArray, left, right, countCompares, countExchanges);
+	}
+	while (right > 0)
+	{
+		temporary = auxArray[0]; auxArray[0] = auxArray[right]; auxArray[right] = temporary;
+		countExchanges++;
+		right--; sieve(auxArray, left, right, countCompares, countExchanges);
+	}
 }
 void show(int* currentArray, int size)
 {

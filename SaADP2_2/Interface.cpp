@@ -14,7 +14,8 @@ void printMenu()
 		<< "\n3. Insertion sort."
 		<< "\n4. Shell sort."
 		<< "\n5. Quick sort."
-		<< "\n6. Exit."
+		<< "\n6. Pyramid sort."
+		<< "\n7. Exit."
 		<< endl;
 }
 
@@ -44,7 +45,8 @@ void interface(int* mainArray, int* auxArray, int& countCompares, int& countExch
 		case SelectionSort: { caseSort(selectionSort, mainArray, auxArray, countCompares, countExchanges, size); break; }
 		case InsertionSort: { caseSort(insertionSort, mainArray, auxArray, countCompares, countExchanges, size); break; }
 		case ShellSort:     { caseSort(shellSort, mainArray, auxArray, countCompares, countExchanges, size); break; }
-		case QuickSort:     { caseSort(quickSort, mainArray, auxArray, countCompares, countExchanges, size); break; }
+		case QuickSort:     { caseQuickSort(mainArray, auxArray, countCompares, countExchanges, size); break; }
+		case PyramidSort:   { caseSort(pyramidSort, mainArray, auxArray, countCompares, countExchanges, size); break; }
 		case Exit:          { stop = true; break; }
 		default:              cout << "   There is no such menu item.\n\n"; break;
 		}
@@ -73,5 +75,13 @@ void caseSort(void(*pSort)(int*, int&, int&, int), int* mainArray, int* auxArray
 	countCompares = countExchanges = 0;
 	duplicateArray(mainArray, auxArray, size);
 	pSort(auxArray, countCompares, countExchanges, size);
+	showInfo(mainArray, auxArray, countCompares, countExchanges, size);
+}
+
+void caseQuickSort(int* mainArray, int* auxArray, int& countCompares, int& countExchanges, int size)
+{
+	countCompares = countExchanges = 0;
+	duplicateArray(mainArray, auxArray, size);
+	quickSort(auxArray, 0, size - 1, countCompares, countExchanges, size);
 	showInfo(mainArray, auxArray, countCompares, countExchanges, size);
 }

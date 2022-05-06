@@ -3,7 +3,7 @@
 
 enum interface
 {
-	ShowMenu, BubbleSort, SelectionSort, InsertionSort, ShellSort, QuickSort, Exit,
+	ShowMenu, BubbleSort, SelectionSort, InsertionSort, ShellSort, QuickSort, PyramidSort, Exit,
 	BaseLevel = 1,
 };
 
@@ -20,3 +20,4 @@ void showInfo(int* mainArray, int* auxArray, int& countCompares, int& countExcha
 void caseSort(void(*pSort)(int*, int&, int&, int), int* mainArray, int* auxArray,
 	int& countCompares, int& countExchanges, int size);
 
+void caseQuickSort(int* mainArray, int* auxArray, int& countCompares, int& countExchanges, int size);
