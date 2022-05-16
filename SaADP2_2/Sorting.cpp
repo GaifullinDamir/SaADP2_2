@@ -131,7 +131,7 @@ void quickSort(int* auxArray, int begin, int end, int& countCompares, int& count
 			j--;
 			countCompares++;
 		}
-		countCompares += 2;
+	
 		if (i <= j)
 		{
 			temporary = auxArray[i]; auxArray[i] = auxArray[j]; auxArray[j] = temporary;
@@ -156,14 +156,13 @@ void sieve(int* auxArray, int left, int right, int& countCompares, int& countExc
 	{
 		countCompares++;
 		auxArray[i] = auxArray[j]; i = j; j = 2 * j;
-		countExchanges++;
+
 		if (j < right && auxArray[j + 1] > auxArray[j])
 		{
 			j++;
 		}
 		countCompares++;
 	}
-	countCompares++;
 	auxArray[i] = x;
 	countExchanges++;
 }
