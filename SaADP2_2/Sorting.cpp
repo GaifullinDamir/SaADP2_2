@@ -35,39 +35,52 @@ void bubbleSort(int* auxArray, int& countCompares, int& countExchanges, int size
 	}
 }
 
+
 void selectionSort(int* auxArray, int& countCompares, int& countExchanges, int size)
 {
-	int temporary;
-	for (int startIndex = 0; startIndex < size - 1; startIndex++)
+	int min = 0;
+	int temp = 0;
+	for (int i = 0; i < size; i++)
 	{
-		int smallestIndex = startIndex;
-		for (int currentIndex = startIndex + 1; currentIndex < size; currentIndex++)
+		for (int j = i + 1; j < size; j++)
 		{
-			if (auxArray[currentIndex] < auxArray[smallestIndex]) { smallestIndex = currentIndex; }
+			min = i;
 			countCompares++;
+			if (auxArray[j] < auxArray[min])
+			{
+				min = j;
+			}
+			if (i != min)
+			{
+				temp = auxArray[i];
+				auxArray[i] = auxArray[min];
+				auxArray[min] = temp;
+				countExchanges++;
+			}
 		}
-		temporary = auxArray[startIndex];
-		auxArray[startIndex] = auxArray[smallestIndex];
-		auxArray[smallestIndex] = temporary;
-		countExchanges++;
 	}
 }
 
 void insertionSort(int* auxArray, int& countCompares, int& countExchanges, int size)
 {
-	int temporary;
 	for (int i = 1; i < size; i++)
 	{
-		temporary = auxArray[i]; int j = i - 1;
-		while (j >= 0 && temporary < auxArray[j])
+		int j = i - 1;
+		while (j > 0 && auxArray[i] < auxArray[j])
 		{
-			auxArray[j + 1] = auxArray[j];
-			j--;
+			j = j - 1;
 			countCompares++;
+		}
+		if (j + 1 != i)
+		{
+			int temporary = auxArray[i]; int l = i - 1;
+			while (l >= j + 1)
+			{
+				auxArray[l + 1] = auxArray[l]; l--;
+			}
+			auxArray[j + 1] = temporary;
 			countExchanges++;
 		}
-		auxArray[j + 1] = temporary;
-		countCompares++;
 	}
 }
 
@@ -75,25 +88,31 @@ void shellSort(int* auxArray, int& countCompares, int& countExchanges, int size)
 {
 	int steps = (int)log2(size) - 1; int copySteps = steps;
 	int* stepsArray = new int[steps];
-	for (int i = 0; copySteps > 0; i++, copySteps--){ stepsArray[i] = 2 * copySteps - 1; }
-	int temporary, stepLength, j;
+	for (int i = 0; copySteps > 0; i++, copySteps--) { stepsArray[i] = 2 * copySteps - 1; }
+	int temporary, k, j;
 	for (int m = 0; m < steps; m++)
 	{
-		stepLength = stepsArray[m];
-		for (int i = stepLength; i < size; i++)
+		k = stepsArray[m];
+		for (int i = k; i < size; i++)
 		{
-			temporary = auxArray[i]; j = i - stepLength;
-			while (j >= 0 && temporary < auxArray[j])
+			int j = i - k;
+			while (j > 0 && auxArray[i] < auxArray[j])
 			{
+				j = j - k;
 				countCompares++;
-				auxArray[j + stepLength] = auxArray[j]; j = j - stepLength;
+			}
+			if (j + k != i)
+			{
+				int temporary = auxArray[i]; int l = i - k;
+				while (l >= j + k)
+				{
+					auxArray[l + k] = auxArray[l]; l = l - k;
+				}
+				auxArray[j + k] = temporary;
 				countExchanges++;
 			}
-			countCompares++;
-			auxArray[j + stepLength] = temporary;
 		}
 	}
-	clearMemory(stepsArray);
 }
 
 void quickSort(int* auxArray, int begin, int end, int& countCompares, int& countExchanges, int size)
