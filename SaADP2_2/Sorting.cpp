@@ -95,14 +95,14 @@ void shellSort(int* auxArray, int& countCompares, int& countExchanges, int size)
 		k = stepsArray[m];
 		for (int i = k; i < size; i++)
 		{
-			int j = i - k;
+			j = i - k;
 			while ((++countCompares) && j >= 0 && auxArray[i] < auxArray[j])
 			{
 				j = j - k;
 			}
 			if (j + k != i)
 			{
-				int temporary = auxArray[i]; int l = i - k;
+				temporary = auxArray[i]; int l = i - k;
 				while (l >= j + k)
 				{
 					auxArray[l + k] = auxArray[l]; l = l - k;
@@ -114,10 +114,10 @@ void shellSort(int* auxArray, int& countCompares, int& countExchanges, int size)
 	}
 }
 
-void quickSort(int* auxArray, int begin, int end, int& countCompares, int& countExchanges, int size)
+void quickSort(int* auxArray, int left, int right, int& countCompares, int& countExchanges, int size)
 {
-	int temporary, middle, i = begin, j = end;
-	middle = auxArray[(begin + end) / 2];
+	int temporary, middle, i = left, j = right;
+	middle = auxArray[(left + right) / 2];
 	do
 	{
 		while (auxArray[i] < middle)
@@ -125,6 +125,7 @@ void quickSort(int* auxArray, int begin, int end, int& countCompares, int& count
 			i++;
 			countCompares++;
 		}
+
 		while (auxArray[j] > middle)
 		{
 			j--;
@@ -139,36 +140,39 @@ void quickSort(int* auxArray, int begin, int end, int& countCompares, int& count
 		}
 	} while (i <= j);
 
-	if (begin < j) { quickSort(auxArray, begin, j, countCompares, countExchanges, size); }
-	if (i < end) {  quickSort(auxArray, i, end, countCompares, countExchanges, size); }
+	if (left < j) { quickSort(auxArray, left, j, countCompares, countExchanges, size); }
+	if (i < right) {  quickSort(auxArray, i, right, countCompares, countExchanges, size); }
 }
 
 void sieve(int* auxArray, int left, int right, int& countCompares, int& countExchanges)
 {
 	int i = left, j = 2 * left, x = auxArray[left];
+	countCompares++;
 	if (j < right && auxArray[j + 1] > auxArray[j])
 	{
 		j++;
 	}
-	countCompares++;
 	while (j <= right && auxArray[j] > x)
 	{
 		countCompares++;
 		auxArray[i] = auxArray[j]; i = j; j = 2 * j;
+		countExchanges++;
 
+		countCompares++;
 		if (j < right && auxArray[j + 1] > auxArray[j])
 		{
 			j++;
 		}
-		countCompares++;
 	}
 	auxArray[i] = x;
 	countExchanges++;
 }
+
 void pyramidSort(int* auxArray, int& countCompares, int& countExchanges, int size)
 {
 	int temporary;
 	int left = (size / 2) + 2; int right = size - 1;
+	/*int left = (size / 2) + 1; int right = size;*/
 	while (left > 0)
 	{
 		left--; sieve(auxArray, left, right, countCompares, countExchanges);
