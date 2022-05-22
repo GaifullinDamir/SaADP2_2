@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Sorting.h"
 #include "Interface.h"
+#include <cmath>
 
 using namespace std;
 
@@ -19,15 +20,15 @@ void duplicateArray(int* mainArray, int* auxArray, int size)
 void bubbleSort(int* auxArray, int& countCompares, int& countExchanges, int size)
 {
 	int temporary;
-	for (int i = 0; i < size; i++)
+	for (int i = 1; i < size; i++)
 	{
-		for (int j = 0; j < size - 1 - i; j++)
+		for (int j = size - 1; j >= i; j--)
 		{
-			if (auxArray[j] > auxArray[j + 1])
+			if (auxArray[j - 1] > auxArray[j])
 			{
-				temporary = auxArray[j];
-				auxArray[j] = auxArray[j + 1];
-				auxArray[j + 1] = temporary;
+				temporary = auxArray[j - 1];
+				auxArray[j - 1] = auxArray[j];
+				auxArray[j] = temporary;
 				countExchanges++;
 			}
 			countCompares++;
@@ -40,23 +41,23 @@ void selectionSort(int* auxArray, int& countCompares, int& countExchanges, int s
 {
 	int min = 0;
 	int temp = 0;
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < size - 1; i++)
 	{
+		min = i;
 		for (int j = i + 1; j < size; j++)
 		{
-			min = i;
 			countCompares++;
 			if (auxArray[j] < auxArray[min])
 			{
 				min = j;
 			}
-			if (i != min)
-			{
-				temp = auxArray[i];
-				auxArray[i] = auxArray[min];
-				auxArray[min] = temp;
-				countExchanges++;
-			}
+		}
+		if (i != min)
+		{
+			temp = auxArray[i];
+			auxArray[i] = auxArray[min];
+			auxArray[min] = temp;
+			countExchanges++;
 		}
 	}
 }
@@ -66,10 +67,9 @@ void insertionSort(int* auxArray, int& countCompares, int& countExchanges, int s
 	for (int i = 1; i < size; i++)
 	{
 		int j = i - 1;
-		while (j > 0 && auxArray[i] < auxArray[j])
+		while ((++countCompares) && j >= 0 && auxArray[i] < auxArray[j])
 		{
 			j = j - 1;
-			countCompares++;
 		}
 		if (j + 1 != i)
 		{
@@ -77,16 +77,16 @@ void insertionSort(int* auxArray, int& countCompares, int& countExchanges, int s
 			while (l >= j + 1)
 			{
 				auxArray[l + 1] = auxArray[l]; l--;
+				countExchanges++;
 			}
 			auxArray[j + 1] = temporary;
-			countExchanges++;
 		}
 	}
 }
 
 void shellSort(int* auxArray, int& countCompares, int& countExchanges, int size)
 {
-	int steps = (int)log2(size) - 1; int copySteps = steps;
+	int steps = round(log2(size)) - 1; int copySteps = steps;
 	int* stepsArray = new int[steps];
 	for (int i = 0; copySteps > 0; i++, copySteps--) { stepsArray[i] = 2 * copySteps - 1; }
 	int temporary, k, j;
@@ -96,10 +96,9 @@ void shellSort(int* auxArray, int& countCompares, int& countExchanges, int size)
 		for (int i = k; i < size; i++)
 		{
 			int j = i - k;
-			while (j > 0 && auxArray[i] < auxArray[j])
+			while ((++countCompares) && j >= 0 && auxArray[i] < auxArray[j])
 			{
 				j = j - k;
-				countCompares++;
 			}
 			if (j + k != i)
 			{
@@ -107,9 +106,9 @@ void shellSort(int* auxArray, int& countCompares, int& countExchanges, int size)
 				while (l >= j + k)
 				{
 					auxArray[l + k] = auxArray[l]; l = l - k;
+					countExchanges++;
 				}
 				auxArray[j + k] = temporary;
-				countExchanges++;
 			}
 		}
 	}
