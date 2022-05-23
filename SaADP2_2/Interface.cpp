@@ -46,7 +46,7 @@ void interface(int* mainArray, int* auxArray, int& countCompares, int& countExch
 		case InsertionSort: { caseSort(insertionSort, mainArray, auxArray, countCompares, countExchanges, size); break; }
 		case ShellSort:     { caseSort(shellSort, mainArray, auxArray, countCompares, countExchanges, size); break; }
 		case QuickSort:     { caseQuickSort(mainArray, auxArray, countCompares, countExchanges, size); break; }
-		case PyramidSort:   { caseSort(pyramidSort, mainArray, auxArray, countCompares, countExchanges, size); break; }
+		case PyramidSort:   { casePyramid( mainArray, auxArray, countCompares, countExchanges, size); break; }
 		case Exit:          { stop = true; break; }
 		default:              cout << "   There is no such menu item.\n\n"; break;
 		}
@@ -83,5 +83,15 @@ void caseQuickSort(int* mainArray, int* auxArray, int& countCompares, int& count
 	countCompares = countExchanges = 0;
 	duplicateArray(mainArray, auxArray, size);
 	quickSort(auxArray, 0, size - 1, countCompares, countExchanges, size);
+	showInfo(mainArray, auxArray, countCompares, countExchanges, size);
+}
+
+void casePyramid(int* mainArray, int* auxArray, int& countCompares, int& countExchanges, int size)
+{
+	countCompares = countExchanges = 0;
+	duplicateArray(mainArray, auxArray, size);
+	
+	pyramidSort(auxArray, countCompares, countExchanges, size);
+	countExchanges = countExchanges / 3;
 	showInfo(mainArray, auxArray, countCompares, countExchanges, size);
 }

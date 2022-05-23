@@ -102,16 +102,17 @@ void shellSort(int* auxArray, int& countCompares, int& countExchanges, int size)
 			}
 			if (j + k != i)
 			{
-				temporary = auxArray[i]; int l = i - k;
+				temporary = auxArray[i]; int l = i - k; countExchanges++;
 				while (l >= j + k)
 				{
 					auxArray[l + k] = auxArray[l]; l = l - k;
 					countExchanges++;
 				}
-				auxArray[j + k] = temporary;
+				auxArray[j + k] = temporary; countExchanges++;
 			}
 		}
 	}
+	countExchanges = countExchanges / 3;
 }
 
 void quickSort(int* auxArray, int left, int right, int& countCompares, int& countExchanges, int size)
@@ -146,7 +147,7 @@ void quickSort(int* auxArray, int left, int right, int& countCompares, int& coun
 
 void sieve(int* auxArray, int left, int right, int& countCompares, int& countExchanges)
 {
-	int i = left, j = 2 * left, x = auxArray[left];
+	int i = left, j = 2 * left, x = auxArray[left]; countExchanges++;
 	countCompares++;
 	if (j < right && auxArray[j + 1] > auxArray[j])
 	{
